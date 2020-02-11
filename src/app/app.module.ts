@@ -1,18 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+// tslint:disable-next-line:no-trailing-whitespace
 import { AppComponent } from './app.component';
-
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+import { AccountModule } from './account/account.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { App } from './app.routing';
+import { HttpModule, XHRBackend } from '@angular/http';
+import { ConfigService } from './shared/utils/config.service';
+import { AuthenticateXhr } from './authenticate-xhr.backend';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AccountModule,
+    DashboardModule,
+    BrowserModule,
+    HttpModule,
+    App
   ],
-  providers: [],
+  providers: [ConfigService, {
+    provide: XHRBackend,
+    useClass: AuthenticateXhr
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
